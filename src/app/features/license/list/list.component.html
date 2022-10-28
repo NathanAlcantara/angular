@@ -1,0 +1,122 @@
+<div id="container">
+  <div class="title">
+    <label>Autorizações</label>
+  </div>
+
+  <div id="list-actions">
+    <button
+      mat-raised-button
+      color="primary"
+      class="btn-with-icon btn-rounded"
+      (click)="createLicense()"
+    >
+      <div>
+        <span>Nova Autorização</span>
+        <mat-icon svgIcon="plus-circle"></mat-icon>
+      </div>
+    </button>
+  </div>
+
+  <mat-card id="painel">
+    <div id="state-table" *ngIf="isLoadingResults || isError || isEmpty">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+      <div *ngIf="isEmpty">
+        <mat-icon svgIcon="file"></mat-icon>
+        <span> Nenhum conteúdo encontrado </span>
+      </div>
+      <div *ngIf="isError">
+        <mat-icon svgIcon="file-x"></mat-icon>
+        <span> Ocorreu um erro, tente novamente mais tarde </span>
+      </div>
+    </div>
+
+    <div id="table">
+      <table
+        mat-table
+        [dataSource]="data"
+        matSort
+        matSortActive="title"
+        matSortDisableClear
+        matSortDirection="desc"
+      >
+        <!-- Title Column -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>Título da Obra</th>
+          <td mat-cell *matCellDef="let row">{{ row.title }}</td>
+        </ng-container>
+
+        <!-- Producer Column -->
+        <ng-container matColumnDef="producer">
+          <th mat-header-cell *matHeaderCellDef>Produtor</th>
+          <td mat-cell *matCellDef="let row">{{ row.producer }}</td>
+        </ng-container>
+
+        <!-- Contracted Percentage Column -->
+        <ng-container matColumnDef="contracted_percentage">
+          <th mat-header-cell *matHeaderCellDef>Percentual contratado</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.contracted_percentage }}%
+          </td>
+        </ng-container>
+
+        <!-- Audiovisual Production Title Column -->
+        <ng-container matColumnDef="audiovisual_production_title">
+          <th mat-header-cell *matHeaderCellDef>
+            Título da produção audiovisual
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.audiovisual_production_title }}
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Ações</th>
+          <td mat-cell *matCellDef="let row">
+            <div *ngIf="row.actions.length !== 0">
+              <button
+                *ngIf="row.actions.length === 1; else btnMenu"
+                mat-raised-button
+                class="btn-rounded"
+                (click)="row.actions[0].command(row)"
+              >
+                {{ row.actions[0].label }}
+              </button>
+
+              <ng-template #btnMenu>
+                <button
+                  mat-raised-button
+                  class="btn-with-icon btn-rounded"
+                  [matMenuTriggerFor]="menu"
+                >
+                  <div>
+                    <span>Ações</span>
+                    <mat-icon svgIcon="down-small"></mat-icon>
+                  </div>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button
+                    *ngFor="let action of row.actions"
+                    mat-menu-item
+                    (click)="action.command(row)"
+                  >
+                    {{ action.label }}
+                  </button>
+                </mat-menu>
+              </ng-template>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+
+    <mat-paginator
+      [disabled]="isEmpty"
+      [length]="resultsLength"
+      [pageSizeOptions]="[10, 25, 50, 100]"
+    ></mat-paginator>
+  </mat-card>
+</div>

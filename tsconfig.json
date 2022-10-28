@@ -10,6 +10,8 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true, //FIXME: Remover quando tiver um backend
+    "allowSyntheticDefaultImports": true, //FIXME: Remover quando tiver um backend
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,

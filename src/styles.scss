@@ -10,3 +10,40 @@ body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
+
+.btn-with-icon {
+  div {
+    display: flex;
+    align-items: center;
+
+    span {
+      margin: auto 10px;
+    }
+  }
+}
+
+.btn-rounded {
+  border-radius: 18px !important;
+}
+
+.title {
+  font-size: 25px;
+  margin: 5px 0 20px;
+}
+
+#container {
+  width: 90%;
+  height: 75%;
+  margin: 3% auto;
+
+  #list-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px auto;
+  }
+
+  #painel {
+    height: 83%;
+    padding: 30px;
+  }
+}
