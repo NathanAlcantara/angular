@@ -5,9 +5,16 @@
 
   <span fxFlex="25 25 auto"></span>
 
-  <button mat-button (click)="goTo('login')">
-    Login
-    <mat-icon>login</mat-icon>
+  <button
+    mat-flat-button
+    color="primary"
+    class="btn-with-icon"
+    (click)="goTo('login')"
+  >
+    <div>
+      <span>Login</span>
+      <mat-icon svgIcon="signin"></mat-icon>
+    </div>
   </button>
 
   <span fxFlex="1 1 auto"></span>

@@ -1,20 +1,22 @@
 <div id="container">
-  <div class="title">
-    <label>Autorizações</label>
-  </div>
+  <div id="header" fxLayoutAlign="space-between center">
+    <div id="title">
+      <label>Autorizações</label>
+    </div>
 
-  <div id="list-actions">
-    <button
-      mat-raised-button
-      color="primary"
-      class="btn-with-icon btn-rounded"
-      (click)="createLicense()"
-    >
-      <div>
-        <span>Nova Autorização</span>
-        <mat-icon svgIcon="plus-circle"></mat-icon>
-      </div>
-    </button>
+    <div>
+      <button
+        mat-raised-button
+        color="primary"
+        class="btn-with-icon btn-rounded"
+        (click)="createLicense()"
+      >
+        <div>
+          <span>Nova Autorização</span>
+          <mat-icon svgIcon="plus-circle"></mat-icon>
+        </div>
+      </button>
+    </div>
   </div>
 
   <mat-card id="painel">

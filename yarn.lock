@@ -130,10 +130,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/cdk@^14.2.4":
-  version "14.2.4"
-  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-14.2.4.tgz#f858ff928206c24c1bbd38610444a5214990017d"
-  integrity sha512-5jngZcOyC2n9pRYec/D0iCw72QSnCkGYjtfgIlOK/FZYGhpOa34GMGObPuv4F0u7J2TEtbO6xIFsCFaK0FLIWQ==
+"@angular/cdk@^14.2.6":
+  version "14.2.6"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-14.2.6.tgz#5d78f7eebd228b1d71910e9e3703e02bee84ddcf"
+  integrity sha512-sihrwk/0emYbE2X+DOIlan7mohED9pKiH2gQh2hk3Ud8jjeW6VmbaGtTCkjs+HRbFc9/44uDHasizxrKnjseyw==
   dependencies:
     tslib "^2.3.0"
   optionalDependencies:
@@ -202,10 +202,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/flex-layout@^14.0.0-beta.40":
-  version "14.0.0-beta.40"
-  resolved "https://registry.yarnpkg.com/@angular/flex-layout/-/flex-layout-14.0.0-beta.40.tgz#ec3c09389f5ae277d09aebcb2a0c8bf7c1329967"
-  integrity sha512-lYi2BKovNk5u2wmj/AMIMqfUzCBEt99Wu/Gfa+1mUIlw3voKCmIsV2XYBhX4adRdD+dRagY3Opger43JR7PXEw==
+"@angular/flex-layout@^14.0.0-beta.41":
+  version "14.0.0-beta.41"
+  resolved "https://registry.yarnpkg.com/@angular/flex-layout/-/flex-layout-14.0.0-beta.41.tgz#94903664670090c3ba0d4824b0135882a7f1bda9"
+  integrity sha512-x1YcxqkdFlcbVXEy9ebCgW/F+7n/MXkEkwEcVEIPf5v5qn7HZsjQxgIj35Lf0amvMyF7h35prpoxO1uX5+ntFg==
   dependencies:
     tslib "^2.3.0"
 
@@ -216,10 +216,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/material@14.2.4":
-  version "14.2.4"
-  resolved "https://registry.yarnpkg.com/@angular/material/-/material-14.2.4.tgz#9a6902fbe06a93abcfa2152ea2300d09fed06305"
-  integrity sha512-vS7dyrnr2YpZPjFFmnSZ9W0dFpBQ5cWf4CH5AI0/KfbCGC+2ybkFZ61oMNBf1xXdoyf4Ob16Dm3xerKWFwJ4sQ==
+"@angular/material@14.2.6":
+  version "14.2.6"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-14.2.6.tgz#ecaa8dd22c9970a0534bdcff741ad54fcb7f0951"
+  integrity sha512-HykrjDdDoH03oJkV6REW4cx8mVku38LPAagnfJVtqaKsNxG2KtF+LkSlkumeL2cqacFGen/Pf3QV8hxo4FLWhQ==
   dependencies:
     tslib "^2.3.0"
 
@@ -1424,6 +1424,11 @@
   dependencies:
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
+
+"@jsreport/browser-client@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@jsreport/browser-client/-/browser-client-3.1.0.tgz#a84011087ca8a29a6dc6a852fa05ffaf1983a679"
+  integrity sha512-ZElwn2KRIzkUzAyD5UKGxULZUhokWuPOlMzrmiur4WirqH3yoiHlOJEdnRGkjjE/fhZzCR8gBFZ/TuOW/fsOIw==
 
 "@leichtgewicht/ip-codec@^2.0.1":
   version "2.0.4"

@@ -2,8 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
+import jsreport from '@jsreport/browser-client';
 import { catchError, map, merge, of, startWith, switchMap } from 'rxjs';
-import { License, ListService } from './list.service';
+import { License, LicenseService } from '../license.service';
 
 @Component({
   selector: 'n-list',
@@ -31,7 +32,7 @@ export class ListComponent {
     return !this.data;
   }
 
-  constructor(private listService: ListService, private router: Router) {}
+  constructor(private listService: LicenseService, private router: Router) {}
 
   ngAfterViewInit() {
     // If the user changes the sort order, reset back to the first page.
@@ -43,7 +44,7 @@ export class ListComponent {
         switchMap(() => {
           this.isLoadingResults = true;
           return this.listService
-            .getLicenses(
+            .list(
               this.sort.active,
               this.sort.direction,
               this.paginator.pageIndex,
@@ -62,6 +63,10 @@ export class ListComponent {
               {
                 label: 'Editar',
                 command: (row: License) => this.goTo('edit/' + row.id),
+              },
+              {
+                label: 'Imprimir',
+                command: (row: License) => this.print(row),
               },
             ];
             return d;
@@ -89,7 +94,31 @@ export class ListComponent {
     this.router.navigate([route]);
   }
 
+  async print(license: License) {
+    (jsreport as any).serverUrl = 'https://nathan.jsreportonline.net/';
+    console.warn('Basic ' + btoa('admin:admin'));
+
+    jsreport.headers = {
+      Authorization:
+        'Basic ' + btoa('nathangabriel97@gmail.com:ayN8UwbQWFRXa@1a'),
+    };
+
+    const report = await jsreport.render({
+      template: {
+        name: 'peermusic',
+      },
+      data: {
+        license,
+      },
+    });
+    // download the output to the file
+    // report.download('license.pdf');
+
+    // open output in the new window
+    report.openInWindow();
+  }
+
   createLicense() {
-    console.log('a');
+    this.goTo('add');
   }
 }

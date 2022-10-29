@@ -1,1 +1,31 @@
-<p>edit works!</p>
+<div id="container">
+  <div id="header" fxLayoutAlign="space-between center">
+    <div id="title">
+      <label>{{ titlePrefix }} Autorização</label>
+    </div>
+
+    <div>
+      <button
+        mat-raised-button
+        color="primary"
+        class="btn-with-icon btn-rounded"
+        (click)="save()"
+      >
+        <div>
+          <span>Salvar</span>
+          <mat-icon svgIcon="save"></mat-icon>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <mat-card id="painel">
+    <form fxLayout="column" fxFlexFill [formGroup]="licenseForm">
+      <div *ngFor="let item of properties">
+        <mat-form-field fxFlexFill>
+          <input matInput [placeholder]="item" [formControlName]="item" />
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-card>
+</div>

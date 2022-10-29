@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ListService } from './list.service';
+import { LicenseService } from './license.service';
 
-describe('ListService', () => {
-  let service: ListService;
+describe('LicenseService', () => {
+  let service: LicenseService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ListService);
+    service = TestBed.inject(LicenseService);
   });
 
   it('should be created', () => {
