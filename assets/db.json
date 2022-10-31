@@ -1,0 +1,36 @@
+{
+  "licenses": [
+    {
+      "id": "1",
+      "producer": "GLOBO COMUNICAÇÃO E PARTICIPAÇÕES S/A",
+      "title": "PETROLINA JUAZEIRO",
+      "subheading": "",
+      "authors": ["JORGE ALTINHO"],
+      "kind": "",
+      "copyright": "MERIDIONAL ( PEERMUSIC DO BRASIL )",
+      "administrator": "PEERMUSIC DO BRASIL EDIÇÕES MUSICAIS LTDA",
+      "contracted_percentage": 100,
+      "audiovisual_production_title": "ESQUENTA - CAP 154 - EXIBIÇÃO - 30/08/2015 - TV",
+      "sync_type": "PERFORMANCE",
+      "sync_price": "R$ 454,37 (QUATROCENTOS E CINQUENTA E QUATRO REAIS E TRINTA E SETE CENTAVOS)",
+      "location": "BRASIL E EXTERIOR",
+      "obs": ""
+    },
+    {
+        "id": "23",
+        "producer": "GLOBO COMUNICAÇÃO E PARTICIPAÇÕES S/A",
+        "title": "BOOM CLAP",
+        "subheading": "",
+        "authors": ["STEFAN GRASLUND/ CHARLOTTE AITCHISON/ FREDRIK BERGER", "PATRIK BERGER"],
+        "kind": "",
+        "copyright": "PEERMUSIC  BRASIL",
+        "administrator": "PEERMUSIC DO BRASIL EDIÇÕES MUSICAIS LTDA",
+        "contracted_percentage": 10,
+        "audiovisual_production_title": "CALDEIRÃO DO HUCK - CAP 783 - EXIBIÇÃO - 01/08/2015",
+        "sync_type": "ADORNO",
+        "sync_price": "R$ 60,32 ( SESSENTA REAIS E TRINTA E DOIS CENTAVOS )",
+        "location": "BRASIL E EXTERIOR",
+        "obs": ""
+      }
+  ]
+}
