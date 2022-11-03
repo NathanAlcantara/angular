@@ -1,8 +1,10 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import jsreport from '@jsreport/browser-client';
+import { PDFDocument } from 'pdf-lib';
 import { catchError, map, merge, of, startWith, switchMap } from 'rxjs';
 import { License, LicenseService } from '../license.service';
 
@@ -13,6 +15,7 @@ import { License, LicenseService } from '../license.service';
 })
 export class ListComponent {
   displayedColumns: string[] = [
+    'select',
     'title',
     'producer',
     'contracted_percentage',
@@ -25,11 +28,19 @@ export class ListComponent {
   isLoadingResults = true;
   isError = false;
 
+  selection = new SelectionModel<License>(true, []);
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   get isEmpty(): boolean {
     return !this.data;
+  }
+
+  get isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.data.length;
+    return numSelected === numRows;
   }
 
   constructor(private listService: LicenseService, private router: Router) {}
@@ -48,11 +59,13 @@ export class ListComponent {
               this.sort.active,
               this.sort.direction,
               this.paginator.pageIndex,
+              this.paginator.pageSize,
             )
             .pipe(catchError(() => of(null)));
         }),
         map((data: any) => {
           this.isLoadingResults = false;
+          this.selection.clear();
 
           if (!data) {
             return [];
@@ -67,6 +80,10 @@ export class ListComponent {
               {
                 label: 'Imprimir',
                 command: (row: License) => this.print(row),
+              },
+              {
+                label: 'Duplicar',
+                command: (row: License) => this.goTo('duplicate/' + row.id),
               },
             ];
             return d;
@@ -90,35 +107,93 @@ export class ListComponent {
       });
   }
 
+  toggleAllRows() {
+    if (this.isAllSelected) {
+      this.selection.clear();
+      return;
+    }
+
+    this.selection.select(...this.data);
+  }
+
+  checkboxLabel(row?: License): string {
+    if (!row) {
+      return `${this.isAllSelected ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+      row.id + 1
+    }`;
+  }
+
   goTo(route: string) {
     this.router.navigate([route]);
   }
 
-  async print(license: License) {
-    (jsreport as any).serverUrl = 'https://nathan.jsreportonline.net/';
-    console.warn('Basic ' + btoa('admin:admin'));
+  async printInBulk() {
+    if (this.selection.isEmpty()) {
+      return;
+    }
 
-    jsreport.headers = {
-      Authorization:
-        'Basic ' + btoa('nathangabriel97@gmail.com:ayN8UwbQWFRXa@1a'),
-    };
+    this.print(...this.selection.selected);
+  }
 
-    const report = await jsreport.render({
-      template: {
-        name: 'peermusic',
-      },
-      data: {
-        license,
-      },
-    });
-    // download the output to the file
-    // report.download('license.pdf');
+  async print(...licenses: License[]) {
+    const licensesUrl: string[] = [];
 
-    // open output in the new window
-    report.openInWindow();
+    for (const license of licenses) {
+      (jsreport as any).serverUrl = 'https://nathan.jsreportonline.net/';
+      console.warn('Basic ' + btoa('admin:admin'));
+
+      jsreport.headers = {
+        Authorization:
+          'Basic ' + btoa('nathangabriel97@gmail.com:ayN8UwbQWFRXa@1a'),
+      };
+
+      const report = await jsreport.render({
+        template: {
+          name: 'peermusic',
+        },
+        data: {
+          license,
+        },
+      });
+
+      const reportURL = await report.toObjectURL();
+
+      licensesUrl.push(reportURL);
+    }
+
+    this.mergeAllPDFsAndOpenInNewWindow(licensesUrl);
   }
 
   createLicense() {
     this.goTo('add');
+  }
+
+  async mergeAllPDFsAndOpenInNewWindow(urls: string[]) {
+    const pdfDoc = await PDFDocument.create();
+    const numDocs = urls.length;
+
+    for (let i = 0; i < numDocs; i++) {
+      const donorPdfBytes = await fetch(urls[i]).then((res) =>
+        res.arrayBuffer(),
+      );
+      const donorPdfDoc = await PDFDocument.load(donorPdfBytes);
+      const docLength = donorPdfDoc.getPageCount();
+      for (let k = 0; k < docLength; k++) {
+        const [donorPage] = await pdfDoc.copyPages(donorPdfDoc, [k]);
+        pdfDoc.addPage(donorPage);
+      }
+    }
+
+    const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
+
+    const downloadLink = document.createElement('a');
+    const fileName = numDocs > 1 ? 'autorizações.pdf' : 'autorização.pdf';
+    downloadLink.href = pdfDataUri;
+    downloadLink.download = fileName;
+    downloadLink.click();
+
+    document.body.removeChild(downloadLink);
   }
 }

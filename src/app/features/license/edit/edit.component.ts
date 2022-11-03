@@ -29,8 +29,17 @@ export class EditComponent implements OnInit {
     return Boolean(this.entity);
   }
 
+  get isDuplicated(): boolean {
+    return this.router.url.includes('duplicate');
+  }
+
   get titlePrefix(): string {
-    return this.hasEntity ? 'Editar' : 'Criar';
+    console.log(this.router.url);
+    return this.hasEntity
+      ? this.isDuplicated
+        ? 'Duplicar'
+        : 'Editar'
+      : 'Criar';
   }
 
   constructor(
@@ -62,12 +71,17 @@ export class EditComponent implements OnInit {
 
   save() {
     if (this.licenseForm.valid) {
-      const action = this.hasEntity
+      let action = this.hasEntity
         ? this.licenseService.update(
             this.licenseForm.value.id,
             this.licenseForm.value,
           )
         : this.licenseService.create(this.licenseForm.value);
+
+      if (this.isDuplicated) {
+        delete this.licenseForm.value.id;
+        action = this.licenseService.create(this.licenseForm.value);
+      }
 
       action.subscribe(() => {
         this.router.navigate(['../list']);

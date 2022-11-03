@@ -20,6 +20,13 @@ const routes: Routes = [
     path: 'add',
     component: EditComponent,
   },
+  {
+    path: 'duplicate/:id',
+    component: EditComponent,
+    resolve: {
+      entity: LicenseFindOneResolver,
+    },
+  },
 ];
 
 @NgModule({

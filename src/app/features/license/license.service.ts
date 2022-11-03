@@ -34,12 +34,38 @@ export class LicenseService {
 
   //FIXME: Ajustar quando tiver um backend
   list(
-    sort?: string,
-    order?: SortDirection,
-    page?: number,
+    sort: string,
+    order: SortDirection = 'desc',
+    page = 0,
+    pageSize = 10,
   ): Observable<LicenseListOutput> {
+    const licensesSorted = this._licenses.sort((a, b) => {
+      const aValue = (a[sort as keyof License] as string).toLowerCase();
+      const bValue = (b[sort as keyof License] as string).toLowerCase();
+
+      if (order === 'asc') {
+        if (aValue < bValue) {
+          return 1;
+        }
+        return -1;
+      }
+
+      if (order === 'desc') {
+        if (aValue > bValue) {
+          return 1;
+        }
+        return -1;
+      }
+
+      return 0;
+    });
+
+    const licensesPaginated = licensesSorted.filter(
+      (val, index) => index >= page * pageSize,
+    );
+
     return of({
-      items: this._licenses,
+      items: licensesPaginated,
       total_count: this._licenses.length,
     });
   }
